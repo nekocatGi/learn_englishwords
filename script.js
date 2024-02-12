@@ -26,16 +26,29 @@ document.getElementById("langbtn_txt").addEventListener("click", e => {
 });
 
 function execute() {
-  range = 1850;
+  range = [document.getElementById("from").value,
+           document.getElementById("to").value];
   que_n = Math.floor(number.value);
   if (que_n > 1850 || que_n < 1) {
     alert("問題数は1~1850を指定してください");
     return;
+  };
+  if ((range[1] - range[0]) <= 2) {
+    alert("単語番号の範囲の単語は4単語以上にしてください")
+    return;
+  }
+  if (range[0]>range[1] || range[0] < 0 || range[1] < 0 || range[0] > 2027 || range[1] > 2027) {
+    alert("単語番号の値がおかしいです");
+    return;
+  };
+  if ((range[1] - range[0] + 1) < que_n) {
+    alert("問題数は問題番号の範囲の単語の数より少なくしてください");
+    return;
   }
   main.textContent = "　";
   for (let i=1; i<=4; i++) {
-    choice[i].textContent = " "
-  }
+    choice[i].textContent = " ";
+  };
   torf.textContent = "";
   explain.textContent = "";
   goresult.textContent = "";
@@ -58,7 +71,7 @@ function execute() {
   for (let i=1; i<=que_n; i++) {
     let q;
     do {
-      q = Math.floor(Math.random() * range);
+      q = getRndInteger(Number(range[0]), Number(range[1]));
     } while (questions.indexOf(q) != -1);
     questions.push(q);
   }
@@ -73,7 +86,7 @@ function ask() {
   choices.push(index)
   for (let i=1; i<=3; i++) {
     do {
-      n = Math.floor(Math.random() * range);
+      n = getRndInteger(Number(range[0]), Number(range[1]));
     } while (choices.indexOf(n) != -1);
     choices.push(n);
   };
@@ -95,16 +108,17 @@ function ask() {
 }
 
 function mark(n) {
+  if (goresult.innerText) return;
   let correct = choices.indexOf(index);
   if (correct == n){
-    const audio = new Audio('correct.mp3');
+    const audio = new Audio('https://cdn.glitch.global/5c7b5f11-6db6-4f7c-b099-28af974d1416/correct.mp3?v=1707530775248');
     audio.play();
     torf.style.color = "#3feb00";
     torf.textContent = "正解!";
     explain.innerText = "";
     score++
   } else {
-    const audio = new Audio('wrong.mp3');
+    const audio = new Audio('https://cdn.glitch.global/5c7b5f11-6db6-4f7c-b099-28af974d1416/wrong.mp3?v=1707530800098');
     audio.play();
     torf.style.color = "#eb0000";
     torf.textContent = "不正解";
@@ -157,6 +171,11 @@ function btn3() {
 function btn4() {
   mark(3);
 };
+
+function getRndInteger(min, max) {
+  max += 1;
+  return Math.floor(Math.random() * (max - min) ) + min - 1;
+}
 
 function shuffle(arr) {
   var i, j, temp;
@@ -504,7 +523,7 @@ const tango_list = [
   {"en": "unless", "ja": "～しない限り"},
   {"en": "except", "ja": "除いて"},
   {"en": "ought", "ja": "～すべきである"},
-  {"en": "in spite of", "ja": "もかかわらず"},
+  {"en": "in spite of", "ja": "にもかかわらず"},
   {"en": "whether", "ja": "～かどうか、～であろうとなかろうと"},
   {"en": "explain", "ja": "説明する"},
   {"en": "accept", "ja": "受け入れる"},
@@ -802,7 +821,7 @@ const tango_list = [
   {"en": "illustrate", "ja": "（例で）示す"},
   {"en": "arrest", "ja": "逮捕する"},
   {"en": "stimulate", "ja": "刺激する"},
-  {"en": "assure", "ja": "（）保証する"},
+  {"en": "assure", "ja": "保証する"},
   {"en": "consult", "ja": "相談する、参照する"},
   {"en": "depress", "ja": "憂鬱にさせる"},
   {"en": "crash", "ja": "激突する"},
@@ -2024,5 +2043,182 @@ const tango_list = [
   {"en": "novelty", "ja": "目新しさ"},
   {"en": "specimen", "ja": "標本"},
   {"en": "hygiene", "ja": "衛生"},
-  {"en": "tactics", "ja": "戦術"}
+  {"en": "tactics", "ja": "戦術"},
+  {"en": "monopoly", "ja": "独占"},
+  {"en": "token", "ja": "印"},
+  {"en": "aristocracy", "ja": "貴族階級"},
+  {"en": "revenge", "ja": "復讐"},
+  {"en": "activist", "ja": "活動家"},
+  {"en": "rhetoric", "ja": "美辞麗句"},
+  {"en": "entrepreneur", "ja": "起業家"},
+  {"en": "census", "ja": "国勢調査"},
+  {"en": "verge", "ja": "瀬戸際"},
+  {"en": "advent", "ja": "出現、到来"},
+  {"en": "analogy", "ja": "類似点"},
+  {"en": "irrigation", "ja": "灌漑"},
+  {"en": "coverage", "ja": "報道"},
+  {"en": "cuisine", "ja": "料理"},
+  {"en": "menace", "ja": "脅威"},
+  {"en": "peril", "ja": "危険"},
+  {"en": "limb", "ja": "手足"},
+  {"en": "assault", "ja": "攻撃"},
+  {"en": "hatred", "ja": "憎しみ"},
+  {"en": "autonomy", "ja": "自主性"},
+  {"en": "cram", "ja": "塾"},
+  {"en": "subsidy", "ja": "補助金"},
+  {"en": "empathy", "ja": "共感"},
+  {"en": "slang", "ja": "俗語"},
+  {"en": "posture", "ja": "姿勢"},
+  {"en": "Ideology", "ja": "イデオロギー"},
+  {"en": "curse", "ja": "災いのもと"},
+  {"en": "tumor", "ja": "腫瘍"},
+  {"en": "intersection", "ja": "交差点"},
+  {"en": "duration", "ja": "期間"},
+  {"en": "deforestation", "ja": "森林破壊"},
+  {"en": "precaution", "ja": "用心"},
+  {"en": "bunch", "ja": "ひとたばの"},
+  {"en": "shortcoming", "ja": "欠点"},
+  {"en": "aspiration", "ja": "熱望"},
+  {"en": "psychiatrist", "ja": "精神科医"},
+  {"en": "shipping", "ja": "発送"},
+  {"en": "senator", "ja": "上院議員"},
+  {"en": "statesman", "ja": "政治家"},
+  {"en": "subordinate", "ja": "部下"},
+  {"en": "vacuum", "ja": "空白"},
+  {"en": "quest", "ja": "探究"},
+  {"en": "meditation", "ja": "瞑想"},
+  {"en": "subscriber", "ja": "加入者"},
+  {"en": "riddle", "ja": "謎"},
+  {"en": "rag", "ja": "ぼろ"},
+  {"en": "rust", "ja": "さび"},
+  {"en": "sanitation", "ja": "衛生"},
+  {"en": "midst", "ja": "まっただ中"},
+  {"en": "mischief", "ja": "いたずら"},
+  {"en": "proficiency", "ja": "検定"},
+  {"en": "recollection", "ja": "記憶"},
+  {"en": "latitude", "ja": "緯"},
+  {"en": "friction", "ja": "摩擦"},
+  {"en": "botanist", "ja": "植物学者"},
+  {"en": "heredity", "ja": "遺伝"},
+  {"en": "contempt", "ja": "軽蔑"},
+  {"en": "anatomy", "ja": "構造"},
+  {"en": "integrity", "ja": "誠実"},
+  {"en": "cargo", "ja": "貨物"},
+  {"en": "bribe", "ja": "わいろ"},
+  {"en": "eruption", "ja": "噴火"},
+  {"en": "funeral", "ja": "葬式"},
+  {"en": "deficit", "ja": "赤字"},
+  {"en": "bulk", "ja": "大部分"},
+  {"en": "millionaire", "ja": "百万長者"},
+  {"en": "ash", "ja": "灰"},
+  {"en": "realm", "ja": "領域"},
+  {"en": "plantation", "ja": "農園"},
+  {"en": "plow", "ja": "すき"},
+  {"en": "vending", "ja": "販売"},
+  {"en": "orphan", "ja": "孤児"},
+  {"en": "neuron", "ja": "神経細胞"},
+  {"en": "vegetation", "ja": "植生"},
+  {"en": "warrior", "ja": "戦士"},
+  {"en": "mutation", "ja": "突然変異"},
+  {"en": "sewage", "ja": "下水"},
+  {"en": "paradigm", "ja": "理論的枠組"},
+  {"en": "protocol", "ja": "議定書"},
+  {"en": "skyscraper", "ja": "高層ビル"},
+  {"en": "accord", "ja": "一致"},
+  {"en": "bureaucrat", "ja": "官僚"},
+  {"en": "array", "ja": "多彩"},
+  {"en": "clash", "ja": "衝突"},
+  {"en": "torture", "ja": "拷問"},
+  {"en": "reign", "ja": "統治"},
+  {"en": "thesis", "ja": "論文"},
+  {"en": "digit", "ja": "桁"},
+  {"en": "agenda", "ja": "課題"},
+  {"en": "onset", "ja": "発症"},
+  {"en": "peasant", "ja": "小作農"},
+  {"en": "ultraviolet", "ja": "紫外"},
+  {"en": "renowned", "ja": "有名な"},
+  {"en": "transparent", "ja": "透き通った"},
+  {"en": "dim", "ja": "薄暗い"},
+  {"en": "legitimate", "ja": "正当な"},
+  {"en": "adverse", "ja": "悪"},
+  {"en": "swift", "ja": "すばやい"},
+  {"en": "naive", "ja": "世間知らずの"},
+  {"en": "dumb", "ja": "ばか"},
+  {"en": "gloomy", "ja": "暗い"},
+  {"en": "furious", "ja": "激怒した"},
+  {"en": "earnest", "ja": "まじめな"},
+  {"en": "terrific", "ja": "すばらしい"},
+  {"en": "vertical", "ja": "垂直な"},
+  {"en": "wicked", "ja": "邪悪な"},
+  {"en": "subjective", "ja": "主観的な"},
+  {"en": "enlightened", "ja": "進んだ考えの"},
+  {"en": "authentic", "ja": "本物の"},
+  {"en": "brutal", "ja": "残忍な"},
+  {"en": "dizzy", "ja": "めまい"},
+  {"en": "sheer", "ja": "まったくの"},
+  {"en": "naughty", "ja": "いたずらな"},
+  {"en": "damp", "ja": "湿った"},
+  {"en": "static", "ja": "静的な"},
+  {"en": "doomed", "ja": "運命にある"},
+  {"en": "respiratory", "ja": "呼吸器に関する、呼吸の"},
+  {"en": "innumerable", "ja": "無数の"},
+  {"en": "clumsy", "ja": "不器用な"},
+  {"en": "aesthetic", "ja": "美的"},
+  {"en": "obsessed", "ja": "とりつかれている"},
+  {"en": "detached", "ja": "切り離された"},
+  {"en": "wrecked", "ja": "難破した"},
+  {"en": "reckless", "ja": "無謀な"},
+  {"en": "arrogant", "ja": "傲慢な"},
+  {"en": "preoccupied", "ja": "頭がいっぱいだ"},
+  {"en": "gigantic", "ja": "巨大な"},
+  {"en": "conspicuous", "ja": "顕著な"},
+  {"en": "slender", "ja": "すらりとした"},
+  {"en": "manifest", "ja": "明らかな"},
+  {"en": "tidy", "ja": "きちんと"},
+  {"en": "skeptical", "ja": "懐疑的な"},
+  {"en": "notorious", "ja": "悪名高い"},
+  {"en": "anonymous", "ja": "匿名の"},
+  {"en": "monotonous", "ja": "単調な"},
+  {"en": "ample", "ja": "豊富に"},
+  {"en": "trim", "ja": "こぎれいな"},
+  {"en": "savage", "ja": "野蛮な"},
+  {"en": "coherent", "ja": "一貫した"},
+  {"en": "eloquent", "ja": "雄弁な"},
+  {"en": "foul", "ja": "不快な"},
+  {"en": "juvenile", "ja": "青少年の"},
+  {"en": "compulsory", "ja": "義務的な"},
+  {"en": "prone", "ja": "やすい"},
+  {"en": "arbitrary", "ja": "勝手な"},
+  {"en": "ingenious", "ja": "独創的な"},
+  {"en": "divine", "ja": "神聖なる"},
+  {"en": "tender", "ja": "やさしい"},
+  {"en": "outraged", "ja": "憤慨している"},
+  {"en": "intrinsic", "ja": "本来の"},
+  {"en": "paralyzed", "ja": "麻痺している"},
+  {"en": "compatible", "ja": "適合する"},
+  {"en": "patriotic", "ja": "愛国的な"},
+  {"en": "eminent", "ja": "名高い"},
+  {"en": "potent", "ja": "強力な"},
+  {"en": "insane", "ja": "正気を失っている"},
+  {"en": "staple", "ja": "主要な"},
+  {"en": "secondhand", "ja": "間接"},
+  {"en": "indigenous", "ja": "先住"},
+  {"en": "utmost", "ja": "最も"},
+  {"en": "integral", "ja": "不可欠な"},
+  {"en": "intricate", "ja": "複雑な"},
+  {"en": "demographics", "ja": "人口統計の"},
+  {"en": "mighty", "ja": "強力な"},
+  {"en": "intact", "ja": "無傷の"},
+  {"en": "intent", "ja": "決意をしている"},
+  {"en": "intriguing", "ja": "興味深い"},
+  {"en": "merry", "ja": "陽気な"},
+  {"en": "perpetual", "ja": "永続する"},
+  {"en": "spinal", "ja": "脊椎の"},
+  {"en": "susceptible", "ja": "かかりやすい"},
+  {"en": "mandatory", "ja": "義務的な"},
+  {"en": "upright", "ja": "まっすぐに"},
+  {"en": "abruptly", "ja": "不意に"},
+  {"en": "conversely", "ja": "逆に"},
+  {"en": "predominantly", "ja": "主に"},
+  {"en": "lest", "ja": "～しないように"}
 ];
