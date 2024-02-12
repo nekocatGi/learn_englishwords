@@ -9,9 +9,7 @@ const show = document.getElementById("show"),
       number = document.getElementById("number"),
       torf = document.getElementById("TorF"),
       explain = document.getElementById("explain"),
-      goresult = document.getElementById("goresult"),
-      audio_correct = new Audio('correct.mp3'),
-      audio_wrong = new Audio('correct.mp3');
+      goresult = document.getElementById("goresult");
 
 let range, que_n, questions, choice = {}, index, choices, score, wrong, mode;
 
@@ -113,13 +111,15 @@ function mark(n) {
   if (goresult.innerText) return;
   let correct = choices.indexOf(index);
   if (correct == n){
-    audio_correct.play()
+    const audio = new Audio('correct.mp3')
+    audio.play()
     torf.style.color = "#3feb00";
     torf.textContent = "正解!";
     explain.innerText = "";
     score++
   } else {
-    audio_wrong.play();
+    const audio = new Audio('wrong.mp3')
+    audio.play();
     torf.style.color = "#eb0000";
     torf.textContent = "不正解";
     let txt = ""
