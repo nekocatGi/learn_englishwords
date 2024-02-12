@@ -9,7 +9,9 @@ const show = document.getElementById("show"),
       number = document.getElementById("number"),
       torf = document.getElementById("TorF"),
       explain = document.getElementById("explain"),
-      goresult = document.getElementById("goresult");
+      goresult = document.getElementById("goresult"),
+      audio_correct = new Audio('correct.mp3'),
+      audio_wrong = new Audio('correct.mp3');
 
 let range, que_n, questions, choice = {}, index, choices, score, wrong, mode;
 
@@ -111,15 +113,13 @@ function mark(n) {
   if (goresult.innerText) return;
   let correct = choices.indexOf(index);
   if (correct == n){
-    const audio = new Audio('https://cdn.glitch.global/5c7b5f11-6db6-4f7c-b099-28af974d1416/correct.mp3?v=1707530775248');
-    audio.play();
+    audio_correct.play()
     torf.style.color = "#3feb00";
     torf.textContent = "正解!";
     explain.innerText = "";
     score++
   } else {
-    const audio = new Audio('https://cdn.glitch.global/5c7b5f11-6db6-4f7c-b099-28af974d1416/wrong.mp3?v=1707530800098');
-    audio.play();
+    audio_wrong.play();
     torf.style.color = "#eb0000";
     torf.textContent = "不正解";
     let txt = ""
